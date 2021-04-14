@@ -1,4 +1,7 @@
 import cv2
+import requests
+
+url = 'https://localhost:4578/ems/face/'
 
 def fun():
  is_face_detected = False
@@ -11,9 +14,11 @@ def fun():
 
  # Convert into grayscale
  gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ 
 
 # Detect faces
  faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+ 
 
 # Draw rectangle around the faces
  for (x, y, w, h) in faces:
@@ -26,7 +31,11 @@ def fun():
  cv2.waitKey(1000)
 
  print(is_face_detected)
+ myobj = {'isFaceDetected': is_face_detected}
+ x = requests.post(url, data = myobj)
+
+ 
 # Display the output
 while True:
  fun()
- cv2.waitKey(1000)
+ cv2.waitKey(300000)  #five minutes
